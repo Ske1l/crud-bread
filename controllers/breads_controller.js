@@ -1,6 +1,7 @@
 const express = require('express')
 const breads = express.Router()
 const Bread = require('../models/bread.js')
+const Baker = require('../models/baker.js')
 
 
 //index
@@ -21,7 +22,12 @@ module.exports = breads
 
 //new
 breads.get('/new', (req, res) => {
-    res.render('new')
+    Baker.find()
+        .then(foundBakers => {
+            res.render('new', {
+                bakers: foundBakers
+            })
+        })
 })
 
 
@@ -93,6 +99,5 @@ breads.put('/:id', (req, res) => {
             res.redirect(`/breads/${req.params.id}`)
         })
 })
-
 
 

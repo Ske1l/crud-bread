@@ -22,20 +22,25 @@ app.get('/', (req, res) => {
     res.send('Welcome to an awesome app about breads!')
 })
 
-//breads
+// breads
 const breadsController = require('./controllers/breads_controller.js')
 app.use('/breads', breadsController)
 
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true },
-    () => { console.log('connected to mongo: ', process.env.MONGO_URI) }
-)
+// bakers 
+const bakersController = require('./controllers/bakers_controller.js')
+app.use('/bakers', bakersController)
+
+// 404 Page
+app.get('*', (req, res) => {
+    res.send('404')
+})
+
 
 //listen
 app.listen(PORT, () => {
     console.log('listening on port', PORT);
 })
 
-// 404 Page
-app.get('*', (req, res) => {
-    res.send('404')
-})
+
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true },
+    () => { console.log('connected to mongo: ', process.env.MONGO_URI) })
